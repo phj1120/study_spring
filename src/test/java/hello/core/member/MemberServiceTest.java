@@ -20,8 +20,7 @@ public class MemberServiceTest {
         Member findMember = memberService.findMember(1L);
 
         //then
-        // org.assertj.core.api 의 Assertions.assertThat임
-        // junit 아님
+        // org.assertj.core.api 의 Assertions.assertThat임 / junit 아님
         Assertions.assertThat(member).isEqualTo(findMember);
     }
 }
