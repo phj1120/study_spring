@@ -8,7 +8,6 @@ public class MemberServiceImpl implements  MemberService{
 //    private final MemberRepository memberRepository = new MemoryMemberRepository();
 
     private MemberRepository memberRepository;
-
     public MemberServiceImpl(MemberRepository memberRepository) {
 //        추상화에만 의존!! DIP 지킴
 //        생성자 주입이라함
