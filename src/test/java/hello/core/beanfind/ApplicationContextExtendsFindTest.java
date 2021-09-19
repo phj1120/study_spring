@@ -1,3 +1,8 @@
+/*
+ * 2021.09.19
+ * 04. 스프링 빈 조회 - 상속 관계
+ * */
+
 package hello.core.beanfind;
 
 import hello.core.discount.DiscountPolicy;
@@ -19,13 +24,16 @@ public class ApplicationContextExtendsFindTest {
     AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(TestConfig.class);
 
     @Test
-    @DisplayName("부모 타입으로 조회시 자식의 둘 이상 있으면, 중복 오류가 발생한다.")
+    @DisplayName("부모 타입으로 조회시, 자식이 둘 이상 있으면, 중복 오류가 발생한다.(타입으로만 조회시)")
     void findBeanByParentTypeDuplicate(){
+//        동일한 타입이 있어 오류 발생
+//        DiscountPolicy discountPolicy = ac.getBean(DiscountPolicy.class);
+//        assertThat(discountPolicy).isInstanceOf(DiscountPolicy.class);
         assertThrows(NoUniqueBeanDefinitionException.class, () -> ac.getBean(DiscountPolicy.class));
     }
 
     @Test
-    @DisplayName("부모 타입으로 조회시 자식의 둘 이상 있으면, 빈 이름을 지정하면 된다.")
+    @DisplayName("부모 타입으로 조회시, 자식이 둘 이상 있으면, 빈 이름을 지정하면 된다.")
     void findBeanByParentTypeBeanName(){
         DiscountPolicy rateDiscountPolicy = ac.getBean("rateDiscountPolicy", DiscountPolicy.class);
         assertThat(rateDiscountPolicy).isInstanceOf(RateDiscountPolicy.class);

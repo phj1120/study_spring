@@ -1,3 +1,8 @@
+/*
+* 2021.09.19
+* 02. 스프링 빈 조회 - 기본
+* */
+
 package hello.core.beanfind;
 
 import hello.core.AppConfig;
@@ -14,11 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // public 지워도 됨
 class ApplicationContextBasicFindTest {
+    // application context : 스프링 컨테이너
+    // 관례상 ac로 씀
     AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
 
     @Test
     @DisplayName("빈 이름으로 조회")
     void findBeanByName(){
+        System.out.println(ac);
         MemberService memberService = ac.getBean("memberService", MemberService.class);
 //        System.out.println("memberService = " + memberService);
 //        System.out.println("memberService.getClass() = " + memberService.getClass());

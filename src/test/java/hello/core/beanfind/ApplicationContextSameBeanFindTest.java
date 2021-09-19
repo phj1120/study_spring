@@ -1,3 +1,8 @@
+/*
+ * 2021.09.19
+ * 03. 스프링 빈 조회 - 동일한 타입 둘 이상
+ * */
+
 package hello.core.beanfind;
 
 import hello.core.AppConfig;
@@ -22,7 +27,11 @@ public class ApplicationContextSameBeanFindTest {
     @Test
     @DisplayName("타입으로 조회시 같은 타입이 둘 이상 있으면, 중복 오류가 발생한다.")
     void findBeanByTypeDuplicate(){
+//        타입으로만 조회하면 오류 발생
+//        MemberRepository memberRepositroy = ac.getBean(MemberRepository.class);
+//        이렇게 오류 잡을 수 도 있지만
 //        assertThrows(NoUniqueBeanDefinitionException.class, () -> ac.getBean(MemberRepository.class));
+//        그냥 이름 지정해주면 됨
         MemberRepository memberRepositroy = ac.getBean("memberRepository1", MemberRepository.class);
         assertThat(memberRepositroy).isInstanceOf(MemberRepository.class);
     }
@@ -33,9 +42,9 @@ public class ApplicationContextSameBeanFindTest {
         Map<String, MemberRepository> beansOfType = ac.getBeansOfType(MemberRepository.class);
         for (String key : beansOfType.keySet()) {
             System.out.println("key = " + key + " value = " + beansOfType.get(key));
-            System.out.println("beansOfType = " + beansOfType);
-            assertThat(beansOfType.size()).isEqualTo(2);
         }
+        System.out.println("beansOfType = " + beansOfType);
+        assertThat(beansOfType.size()).isEqualTo(2);
     }
 
     @Configuration

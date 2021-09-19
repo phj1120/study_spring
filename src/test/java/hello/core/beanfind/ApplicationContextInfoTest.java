@@ -1,3 +1,8 @@
+/*
+ * 2021.09.19
+ * 01. 컨테이너에 등록된 모든 빈 조회
+ * */
+
 package hello.core.beanfind;
 
 import hello.core.AppConfig;
@@ -21,7 +26,7 @@ public class ApplicationContextInfoTest {
     }
 
     @Test
-    @DisplayName("애플레케이션 빈 출력하기")
+    @DisplayName("애플리케이션 빈 출력하기")
     void findApplicationBean(){
         String[] beanDefinitionNames = ac.getBeanDefinitionNames();
         for (String beanDefinitionName : beanDefinitionNames) {
