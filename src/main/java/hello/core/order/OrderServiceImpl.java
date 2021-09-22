@@ -6,7 +6,6 @@ import hello.core.member.MemberRepository;
 
 public class OrderServiceImpl implements OrderService{
 
-
 //    새로운 할인 정책 적용시 클라이언트 코드 수정 발생 -> DIP 위반
 //    구현체가 아닌 인터페이스에 의존하도록 수정해야함
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
@@ -27,5 +26,11 @@ public class OrderServiceImpl implements OrderService{
         int discountPrice = discountPolicy.discount(member, itemPrice);
 
         return new Order(memberId, itemName, itemPrice, discountPrice);
+    }
+
+
+    // @Configurate 와 싱글톤 테스트 용도
+    public MemberRepository getMemberRepository(){
+        return memberRepository;
     }
 }
