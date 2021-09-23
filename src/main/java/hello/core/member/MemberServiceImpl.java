@@ -1,5 +1,9 @@
 package hello.core.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 //구현체가 하나만 있을 경우 관례상 인터페이스 이름 뒤에 Imple을 붙여 사용함
 public class MemberServiceImpl implements  MemberService{
 //    이 코드가 좋은 코드 인가? 아님
@@ -7,13 +11,14 @@ public class MemberServiceImpl implements  MemberService{
 //    이를 해결하기 위해 AppConfig 이용
 //    private final MemberRepository memberRepository = new MemoryMemberRepository();
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+
+    @Autowired // ac.getBean(MemberRepository.class)와 같은 역할을 함
     public MemberServiceImpl(MemberRepository memberRepository) {
 //        추상화에만 의존!! DIP 지킴
 //        생성자 주입이라함
         this.memberRepository = memberRepository;
     }
-
 
     @Override
     public void join(Member member) {
