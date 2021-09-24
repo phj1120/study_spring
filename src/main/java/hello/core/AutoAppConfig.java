@@ -22,8 +22,10 @@ import org.springframework.context.annotation.FilterType;
         basePackageClasses = AutoAppConfig.class
 )
 public class AutoAppConfig {
-
-    @Bean(name = "memoryMemberRepository")
+    
+//    빈으로 등록할 경우 스프링 부트에서 오류 발생 -> 동일한 이름의 빈이 이미 등록되어있다고
+//    코드 많이 꼬여서 스프링 부트에서는 아예 오류 처리 내버림
+//    @Bean(name = "memoryMemberRepository")
     MemberRepository memberRepository(){
         return new MemoryMemberRepository();
     }
