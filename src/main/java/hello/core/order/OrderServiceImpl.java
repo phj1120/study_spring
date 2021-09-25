@@ -4,10 +4,12 @@ import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+//@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
 
 //    새로운 할인 정책 적용시 클라이언트 코드 수정 발생 -> DIP 위반
@@ -41,8 +43,6 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        System.out.println("memberRepository = " + memberRepository);
-        System.out.println("discountPolicy = " + discountPolicy);
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
@@ -69,7 +69,13 @@ public class OrderServiceImpl implements OrderService{
 //        this.memberRepository = memberRepository;
 //        this.discountPolicy = discountPolicy;
 //    }
-
+    
+//    롬복 라이브러리 적용
+//    @RequiredArgsConstructor
+//    이 있으면 롬복이 알아서 final 이 붙은거로 생성자를 만들어줌
+//    private final MemberRepository memberRepository;
+//    private final DiscountPolicy discountPolicy;
+    
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberId);
@@ -78,7 +84,6 @@ public class OrderServiceImpl implements OrderService{
 
         return new Order(memberId, itemName, itemPrice, discountPrice);
     }
-
 
 //     @Configurate 와 싱글톤 테스트 용도
     public MemberRepository getMemberRepository(){
