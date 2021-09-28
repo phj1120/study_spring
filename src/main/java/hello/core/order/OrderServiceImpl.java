@@ -1,11 +1,13 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,17 +40,17 @@ public class OrderServiceImpl implements OrderService{
 //    생성자 주입
 //    생성자 생성해서 불러옴
 //    생성자 하나 일때는 생략 가능
-    private final MemberRepository memberRepository;
-    private final DiscountPolicy discountPolicy;
-
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
+//    private final MemberRepository memberRepository;
+//    private final DiscountPolicy discountPolicy;
+//
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy DiscountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = DiscountPolicy;
+//    }
 
 //    필드 주입 / 쓰지마
-//    AppConfig 의 OrderService return 주석 처리 후 return null;로 변경\
+//    AppConfig 의 OrderService return 주석 처리 후 return null;로 변경
 //    private 인데도 가능함
 //    간결해서 좋긴 하지만 외부에서 변경이 불가능해 스프링에서도 추천하지 않음
 //    어쨌거나 setter를 만들어야되는데 그럴거면 수정자 쓰지..
@@ -75,13 +77,46 @@ public class OrderServiceImpl implements OrderService{
 //    이 있으면 롬복이 알아서 final 이 붙은거로 생성자를 만들어줌
 //    private final MemberRepository memberRepository;
 //    private final DiscountPolicy discountPolicy;
-    
+
+
+//    스프링 빈 두개 조회시 - 문제 발생
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+//    해결법 1 - @Autowired 변수 명으로 조회
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy rateDiscountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = rateDiscountPolicy;
+//    }
+
+//    해결법 2 - @Qualifier 사용
+//    구현체에 @Qualifier 지정
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("fixDiscountPolicy") DiscountPolicy DiscountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = DiscountPolicy;
+//    }
+
+//    해결법 3 - @Primary 사용
+//    rateDiscountPolicy 에 @Primary 지정
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
+
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberId);
         // 할인 정책이 바뀌어도 코드 수정이 필요없음(위에 불러오는게 바뀌면 바뀌는 거고..)
         int discountPrice = discountPolicy.discount(member, itemPrice);
-
         return new Order(memberId, itemName, itemPrice, discountPrice);
     }
 
