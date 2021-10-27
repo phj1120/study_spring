@@ -22,8 +22,8 @@
 <ul>
 <%--    <%= 없는 부분은 그냥 다 http response 에 담기는 거임 --%>
     <li>id=<%=member.getId()%></li>
-    <li>id=<%=member.getUsername()%></li>
-    <li>id=<%=member.getAge()%></li>
+    <li>Username(=<%=member.getUsername()%></li>
+    <li>Age=<%=member.getAge()%></li>
 </ul>
 <a href="/index.html">메인</a>
 

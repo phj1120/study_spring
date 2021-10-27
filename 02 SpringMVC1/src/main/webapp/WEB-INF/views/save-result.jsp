@@ -11,8 +11,8 @@
 <%--    <li>age=<%=((Member)request.getAttribute("member")).getAge()%></li>--%>
 <%--    jsp 에서 제공하는 프로퍼티 접근법으로 쉽게 조회 가능 --%>
     <li>id=${member.id}</li>
-    <li>id=${member.username}</li>
-    <li>id=${member.age}</li>
+    <li>username=${member.username}</li>
+    <li>age=${member.age}</li>
 
 </ul>
 <a href="/index.html">메인</a>
